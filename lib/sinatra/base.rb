@@ -141,6 +141,10 @@ module Sinatra
       @body = String === value ? [value.to_str] : value
     end
 
+    def status=(value)
+      @status = value ? Rack::Utils.status_code(value) : value
+    end
+
     def each
       block_given? ? super : enum_for(:each)
     end
@@ -243,7 +247,7 @@ module Sinatra
   module Helpers
     # Set or retrieve the response status code.
     def status(value = nil)
-      response.status = Rack::Utils.status_code(value) if value
+      response.status = value if value
       response.status
     end
 

@@ -27,6 +27,11 @@ class ResponseTest < Minitest::Test
     assert_equal 'Hello World', @response.body.join
   end
 
+  it 'translates status symbols' do
+    @response.status = :ok
+    assert_equal 200, @response.status
+  end
+
   [204, 205, 304].each do |status_code|
     it "removes the Content-Type header and body when response status is #{status_code}" do
       @response.status = status_code
